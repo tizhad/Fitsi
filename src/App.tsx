@@ -5,6 +5,9 @@ import Message from "./Message/message";
 
 function App() {
     const [location, setLocation] = useState(new Location());
+    const [message, setMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     useEffect(() => {
         getUserCurrentLocation();
     }, []);
@@ -15,8 +18,10 @@ function App() {
                 ...location,
                 lat: position.coords.latitude,
                 long: position.coords.longitude,
-            })
+            });
+            setMessage('Location received successfully!')
         }, (error) => {
+            setErrorMessage(error.message);
         })
     }
 
@@ -31,7 +36,7 @@ function App() {
             >
                 Lat: {location.lat} <br/> Long: {location.long}
             </a>
-            <Message></Message>
+            <Message message={message} errorMessage={errorMessage}></Message>
 
         </div>
 
