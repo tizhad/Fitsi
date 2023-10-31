@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Location} from "./Models/Location";
+import Message from "./Message/message";
 
 function App() {
     const [location, setLocation] = useState(new Location());
@@ -15,22 +16,25 @@ function App() {
                 lat: position.coords.latitude,
                 long: position.coords.longitude,
             })
+        }, (error) => {
         })
     }
 
+
     return (
         <div className="App">
-            <header className="App-header">
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Lat: {location.lat} <br/> Long: {location.long}
-                </a>
-            </header>
+            <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Lat: {location.lat} <br/> Long: {location.long}
+            </a>
+            <Message></Message>
+
         </div>
+
     );
 }
 
