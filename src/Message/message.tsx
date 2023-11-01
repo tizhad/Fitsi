@@ -1,7 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 function Message(props: any) {
-    return (
+    const [visible, setVisible] = useState(true);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setVisible(false);
+        }, 5000);
+        return () => clearTimeout(timeoutId)
+    })
+
+
+    return visible? (
         <div>
             {props.errorMessage && (
                 <div className="alert alert-danger">{props.errorMessage}</div>
@@ -9,9 +19,8 @@ function Message(props: any) {
             {props.message && (
                 <div className="alert alert-success">{props.message}</div>
             )}
-            <button className='btn btn-primary'>Hey</button>
         </div>
-    );
+    ) : null;
 }
 
 export default Message;
