@@ -36,7 +36,9 @@ function App() {
                     >
                         Lat: {location.lat} <br/> Long: {location.long}
                     </a>
+
                 </div>
+
             ) : null}
 
             <Message message={message} errorMessage={errorMessage}></Message>
