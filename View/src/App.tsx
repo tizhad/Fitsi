@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Location} from "./Models/Location";
 import Message from "./Message/message";
+import Home from "./components/Home/Home";
 
 function App() {
     const [location, setLocation] = useState(new Location());
@@ -42,6 +43,7 @@ function App() {
             ) : null}
 
             <Message message={message} errorMessage={errorMessage}></Message>
+            <Home></Home>
 
         </div>
 
