@@ -7,7 +7,7 @@ interface ModalProps {
 function Modal({onClose}: ModalProps) {
     const now: Date = new Date();
     const [formData, setFormData] = useState({
-        people: '',
+        people: '2 People',
         date: now.getDate(),
         time: now.getTime()
     });
