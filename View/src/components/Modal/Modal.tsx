@@ -13,7 +13,7 @@ function Modal({onClose}: ModalProps) {
     });
 
     const handleChange = (e: any) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -37,16 +37,18 @@ function Modal({onClose}: ModalProps) {
                     </div>
                     <div className="modal-body">
                         <form className="form-group" onSubmit={handleSubmit}>
-                            {/*Make this dropdown*/}
-                            <input
-                                type="text"
+                            <select
                                 name="people"
                                 value={formData.people}
                                 onChange={handleChange}
-                                placeholder="2 People"
                                 className="form-control mb-2"
                                 required
-                            />
+                            >
+                                <option value="1 Person">1 Person</option>
+                                <option value="2 People">2 People</option>
+                                <option value="3 People">3 People</option>
+                                <option value="4 People">4 People</option>
+                            </select>
                             <input
                                 type="date"
                                 name="date"

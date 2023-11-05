@@ -13,14 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            [
-                'name' => 'John Doe',
-                'email' => 'john@example.com',
-            ], [
-                'name' => 'Tary Kazo',
-                'email' => 'tary@example.com',
-            ],
-        ]);
+        $this->call(ReservationsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(RestaurantsTableSeeder::class);
     }
 }

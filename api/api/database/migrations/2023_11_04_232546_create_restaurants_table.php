@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->integer('number_of_tables');
             $table->string('location')->nullable();
             $table->boolean('status');
+            $table->timestamps();
         });
     }
 

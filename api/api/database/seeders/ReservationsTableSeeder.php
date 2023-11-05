@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class ReservationsTableSeeder extends Seeder
+
 {
     /**
      * Run the database seeds.
