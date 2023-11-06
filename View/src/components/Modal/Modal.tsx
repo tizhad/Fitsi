@@ -1,29 +1,72 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import apiService, {getAllRestaurants, submitFormData} from "../../Services/apiService";
+import {Restaurant} from "../../Models/Restaurant";
+import moment from 'moment';
 
 interface ModalProps {
     onClose: () => void;
 }
 
 function Modal({onClose}: ModalProps) {
-    const now: Date = new Date();
+    const currentDate = new Date() ;
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
     const [formData, setFormData] = useState({
-        people: '2 People',
-        date: now.getDate(),
-        time: now.getTime()
+        people: 0,
+        restaurant: '',
+        date: moment(currentDate).format('YYYY-MM-DD'),
+        time: moment(currentDate).format('HH:mm')
     });
+
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
+    const fetchData = async () => {
+        try {
+            const restaurantsData: Restaurant[] = await getAllRestaurants();
+            setRestaurants(restaurantsData);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const onSubmitForm = (e: any) => {
+        console.log('on submit called')
+        e.preventDefault();
+        handleSubmit(formData);
+    }
+
+
+    // const getRestaurants = () => {
+    //     getAllRestaurants().then((res: Restaurant[]) => {
+    //             console.log(res, 'response ')
+    //             restaurants = res;
+    //         }
+    //     )
+    //     return restaurants
+    //
+    // }
 
     const handleChange = (e: any) => {
         const {name, value} = e.target;
+
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: parseInt(value),
         }));
     }
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        console.log(formData)
+    const handleSubmit = async (formData: any) => {
+        try {
+            return await submitFormData(formData)
+        } catch (error) {
+            // USe message component
+            console.log(error)
+        }
+    };
 
-    }
     return (
         <div className="modal fade show" id="reserveModal" style={{display: 'block'}} role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,7 +79,18 @@ function Modal({onClose}: ModalProps) {
                         </button>
                     </div>
                     <div className="modal-body">
-                        <form className="form-group" onSubmit={handleSubmit}>
+                        <form className="form-group" onSubmit={onSubmitForm}>
+                            <select
+                                name="restaurant"
+                                value={formData.restaurant}
+                                onChange={handleChange}
+                                className="form-control mb-2"
+                                required
+                            >
+                                {restaurants.map((restaurant: Restaurant) => (
+                                    <option key={restaurant.id} value={restaurant.id}>{restaurant.name}</option>
+                                ))}
+                            </select>
                             <select
                                 name="people"
                                 value={formData.people}
@@ -44,10 +98,10 @@ function Modal({onClose}: ModalProps) {
                                 className="form-control mb-2"
                                 required
                             >
-                                <option value="1 Person">1 Person</option>
-                                <option value="2 People">2 People</option>
-                                <option value="3 People">3 People</option>
-                                <option value="4 People">4 People</option>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
                             </select>
                             <input
                                 type="date"
