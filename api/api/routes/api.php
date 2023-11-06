@@ -7,15 +7,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['cors'])->group(function () {
+    Route::post('/reservations', [\App\Http\Controllers\ReservationController::class, 'store']);
+    Route::get('/reservations', [\App\Http\Controllers\ReservationController::class, 'index']);
+    Route::put('/reservations/{id}', [\App\Http\Controllers\ReservationController::class, 'update']);
+    Route::delete('/reservations/{id}', [\App\Http\Controllers\ReservationController::class, 'delete']);
 
-//reservations
-Route::post('/reservations', [\App\Http\Controllers\ReservationController::class, 'store']);
-Route::get('/reservations', [\App\Http\Controllers\ReservationController::class, 'index']);
-Route::put('reservations/{id}', 'ReservationController@update');
-Route::delete('reservations/{id}', 'ReservationController@delete');
+    Route::post('/restaurants', [\App\Http\Controllers\RestaurantController::class, 'store']);
+    Route::get('/restaurants', [\App\Http\Controllers\RestaurantController::class, 'index']);
+    Route::put('/restaurants/{id}', [\App\Http\Controllers\RestaurantController::class, 'update']);
+    Route::delete('/restaurants/{id}', [\App\Http\Controllers\RestaurantController::class, 'delete']);
+});
 
-//restaurants
-Route::post('/restaurants', [\App\Http\Controllers\RestaurantController::class, 'store']);
-Route::get('/restaurants', [\App\Http\Controllers\ReservationController::class, 'index']);
-Route::get('/restaurants/{id}', [\App\Http\Controllers\ReservationController::class, 'update']);
-Route::get('/restaurants/{id}', [\App\Http\Controllers\ReservationController::class, 'delete']);
