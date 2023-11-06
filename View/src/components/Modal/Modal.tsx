@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 import apiService, {getAllRestaurants, submitFormData} from "../../Services/apiService";
 import {Restaurant} from "../../Models/Restaurant";
 import moment from 'moment';
+import {Reservation} from "../../Models/Reservation";
 
 interface ModalProps {
     onClose: () => void;
 }
 
 function Modal({onClose}: ModalProps) {
-    const currentDate = new Date() ;
+    const currentDate = new Date();
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const [reservation, setReservation] = useState<Reservation>();
+    const [isReservation, setIsReservation] = useState(false);
 
     const [formData, setFormData] = useState({
         people: 0,
@@ -34,33 +37,23 @@ function Modal({onClose}: ModalProps) {
     };
 
     const onSubmitForm = (e: any) => {
-        console.log('on submit called')
         e.preventDefault();
         handleSubmit(formData);
     }
-
-
-    // const getRestaurants = () => {
-    //     getAllRestaurants().then((res: Restaurant[]) => {
-    //             console.log(res, 'response ')
-    //             restaurants = res;
-    //         }
-    //     )
-    //     return restaurants
-    //
-    // }
 
     const handleChange = (e: any) => {
         const {name, value} = e.target;
 
         setFormData((prevData) => ({
             ...prevData,
-            [name]: parseInt(value),
+            [name]: name === 'date' ? moment(value).format('YYYY-MM-DD') : value,
         }));
-    }
+    };
     const handleSubmit = async (formData: any) => {
         try {
-            return await submitFormData(formData)
+            const reservation = await submitFormData(formData);
+            setReservation(reservation);
+            setIsReservation(true);
         } catch (error) {
             // USe message component
             console.log(error)
@@ -108,7 +101,7 @@ function Modal({onClose}: ModalProps) {
                                 name="date"
                                 value={formData.date}
                                 onChange={handleChange}
-                                placeholder={formData.date.toString()}
+                                placeholder={formData.date}
                                 className="form-control mb-2"
                                 required
                             />
@@ -124,6 +117,8 @@ function Modal({onClose}: ModalProps) {
                             <button className="btn btn-primary m-2" type="submit">Submit</button>
                             <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
                         </form>
+                        {isReservation && <p>Reservation ID: {reservation?.id}</p>}
+
                     </div>
                 </div>
             </div>
