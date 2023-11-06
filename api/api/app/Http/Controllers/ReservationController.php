@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -14,11 +15,22 @@ class ReservationController extends Controller
 
     public function store(Request $request)
     {
-        \Laravel\Prompts\info($request);
-        $reservation = Reservation::create($request->all());
+        $defaultTableNumber = 1;
+        $tableNumber = $request->has('table_number') ? $request->input('table_number') : $defaultTableNumber;
+        $reservationData = [
+            'people' => $request->input('people'),
+            'restaurant_id' => $request->input('restaurant'),
+            'table_number' => $tableNumber,
+            'date' => $request->input('date'),
+            'time' => $request->input('time'),
+        ];
+
+
+        $reservation = Reservation::create($reservationData);
 
         return response()->json($reservation, 201);
     }
+
 
     public function update(Request $request, Reservation $reservation)
     {

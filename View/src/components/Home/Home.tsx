@@ -15,12 +15,18 @@ function Home() {
         setIsModalOpen(false);
     }
 
+    const onAddRestaurant = () => {
+
+    }
+
     return (
         <div>
             <button type="button" className="btn btn-primary" onClick={onTableReservation}>
                 Reserve a Table
             </button>
             {isModalOpen && <Modal onClose={closeModal}/>}
+            <button className="btn btn-outline-primary" onClick={onAddRestaurant}>Add Your Restaurant</button>
+
         </div>
     );
 }
