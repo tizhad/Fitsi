@@ -6,12 +6,14 @@ import {Reservation} from "../../Models/Reservation";
 
 interface ModalProps {
     onClose: () => void;
+    onReservation:(reservation:Reservation) => void;
 }
 
-function Modal({onClose}: ModalProps) {
+
+function Modal({onClose, onReservation}: ModalProps) {
     const currentDate = new Date();
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-    const [reservation, setReservation] = useState<Reservation>();
+    const [reservation, setReservation] = useState<Reservation>({} as Reservation);
     const [isReservation, setIsReservation] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -36,7 +38,7 @@ function Modal({onClose}: ModalProps) {
         }
     };
 
-    const onSubmitForm = (e: any) => {
+    const onSubmitForm = async (e: any) => {
         e.preventDefault();
         handleSubmit(formData);
     }
@@ -50,14 +52,16 @@ function Modal({onClose}: ModalProps) {
         }));
     };
     const handleSubmit = async (formData: any) => {
+        let newReservation: Reservation;
         try {
-            const reservation = await submitFormData(formData);
-            setReservation(reservation);
-            setIsReservation(true);
+            newReservation = await submitFormData(formData);
+            setReservation(newReservation);
+            onReservation(newReservation)
+            onClose();
         } catch (error) {
-            // USe message component
-            console.log(error)
+            console.log(error);
         }
+
     };
 
     return (
