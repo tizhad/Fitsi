@@ -16,10 +16,8 @@ function ReservationDetail({ reservation }: ReservationDetailProps) {
     }, [reservation.id])
 
     const getRestaurantDetail = async () => {
-        console.log('getRestaurantDetail Fire')
         const response = await getRestaurant(reservation.restaurant_id);
         setRestaurant(response);
-        console.log('restaurant', restaurant)
     }
 
 
