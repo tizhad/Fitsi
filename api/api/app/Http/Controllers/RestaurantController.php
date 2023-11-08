@@ -19,13 +19,18 @@ class RestaurantController extends Controller
 
         return response()->json($restaurant, 201);
     }
-//
-//    public function find(int $restaurantID)
-//    {
-//        $restaurant = Restaurant::find($request->all());
-//
-//        return response()->json($restaurant, 201);
-//    }
+    public function findOne(int $id)
+    {
+        $restaurant = Restaurant::find($id);
+
+        if ($restaurant) {
+
+            return $restaurant;
+        } else {
+            return response()->json(['message' => 'Restaurant not found'], 404);
+        }
+
+    }
 
     public function update(Request $request, Restaurant $restaurant)
     {
