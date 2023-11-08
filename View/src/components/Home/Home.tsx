@@ -3,8 +3,6 @@ import Modal from "../Modal/Modal";
 import ReservationDetail from "../Reservation/ReservationDetail";
 import {Reservation} from "../../Models/Reservation";
 
-interface HomeProps {
-}
 
 function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,12 +24,19 @@ function Home() {
 
     return (
         <div>
-            <button type="button" className="btn btn-primary m-2" onClick={onTableReservation}>
+            {!reservation ? (<button type="button" className="btn btn-primary m-2" onClick={onTableReservation}>
                 Reserve a Table
-            </button>
+            </button>) : (<div>
+                <button type="button" className="btn btn-primary m-2" onClick={onTableReservation}>
+                    New Reservation
+                </button>
+                <button type="button" className="btn btn-danger m-2" onClick={onTableReservation}>
+                    Cancel Reservation
+                </button>
+            </div>)}
             {isModalOpen && <Modal onClose={closeModal} onReservation={handleReservation}/>}
-            <button className="btn btn-outline-primary">Add Your Restaurant</button>
-            {reservation &&<ReservationDetail reservation={reservation} />}
+
+            {reservation && <ReservationDetail reservation={reservation}/>}
         </div>
     );
 }
