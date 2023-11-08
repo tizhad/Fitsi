@@ -26,12 +26,14 @@ function App() {
     return (
 
         <div className="App m-4">
+            <Message message={message} errorMessage={errorMessage}></Message>
+            <Home></Home>
+            <button className="btn btn-outline-primary m-2">Add Your Restaurant</button>
             <button className='btn btn-primary' onClick={getUserCurrentLocation}>Get Location</button>
             {location ? (
                 <div>
                     <a
-                        className="App-link"
-                        href="https://reactjs.org"
+                        href="https://www.google.com/maps"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
@@ -41,9 +43,6 @@ function App() {
                 </div>
 
             ) : null}
-
-            <Message message={message} errorMessage={errorMessage}></Message>
-            <Home></Home>
 
         </div>
 
