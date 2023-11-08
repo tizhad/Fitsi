@@ -46,4 +46,17 @@ class ReservationController extends Controller
         return response()->json(null, 204);
     }
 
+    public function findOne(int $id)
+    {
+        $reservation = Reservation::find($id);
+
+        if ($reservation) {
+
+            return $reservation;
+        } else {
+            return response()->json(['message' => 'Reservation not found'], 404);
+        }
+
+    }
+
 }

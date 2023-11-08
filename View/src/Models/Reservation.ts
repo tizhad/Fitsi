@@ -1,8 +1,8 @@
-export interface Restaurant {
+export interface Reservation {
     id:number;
     user: string;
-    restaurantId: number;
-    tableNumber: number;
+    restaurant_id: number;
+    table_number: number;
     date: string;
     time: string;
     people: number;
