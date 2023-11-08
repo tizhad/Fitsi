@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import apiService, {getAllRestaurants, submitFormData} from "../../Services/apiService";
+import {getAllRestaurants, submitFormData} from "../../Services/apiService";
 import {Restaurant} from "../../Models/Restaurant";
 import moment from 'moment';
 import {Reservation} from "../../Models/Reservation";
@@ -15,6 +15,7 @@ function Modal({onClose, onReservation}: ModalProps) {
     const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
     const [reservation, setReservation] = useState<Reservation>({} as Reservation);
     const [isReservation, setIsReservation] = useState(false);
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
     const [formData, setFormData] = useState({
         people: 0,
@@ -50,6 +51,7 @@ function Modal({onClose, onReservation}: ModalProps) {
             ...prevData,
             [name]: name === 'date' ? moment(value).format('YYYY-MM-DD') : value,
         }));
+        setIsSubmitDisabled(false);
     };
     const handleSubmit = async (formData: any) => {
         let newReservation: Reservation;
@@ -118,7 +120,7 @@ function Modal({onClose, onReservation}: ModalProps) {
                                 className="form-control mb-2"
                                 required
                             />
-                            <button className="btn btn-primary m-2" type="submit">Submit</button>
+                            <button className="btn btn-primary m-2" type="submit" disabled={isSubmitDisabled}>Submit</button>
                             <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
                         </form>
                         {isReservation && <p>Reservation ID: {reservation?.id}</p>}
