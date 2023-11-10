@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
-use App\Models\Restaurant;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    public function index(): \Illuminate\Database\Eloquent\Collection
+    public function index(): Collection
     {
         return Reservation::all();
     }
@@ -39,11 +39,17 @@ class ReservationController extends Controller
         return response()->json($reservation, 200);
     }
 
-    public function delete(Reservation $reservation)
+    public function delete(int $id)
     {
-        $reservation->delete();
+        $reservation = Reservation::find($id);
 
-        return response()->json(null, 204);
+        if ($reservation) {
+
+            (new Reservation)->delete();
+            return response()->json(['message' => 'Reservation deleted'], 200);
+        } else {
+            return response()->json(['message' => 'Reservation not found'], 404);
+        }
     }
 
     public function findOne(int $id)
