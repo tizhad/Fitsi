@@ -18,3 +18,11 @@ export const getRestaurant = async (restaurantId: number) => {
     }
 }
 
+export const deleteReservation = async (reservationId: number) => {
+    try {
+        const response = await reservationService.delete(`/reservations/${reservationId}`)
+        return response.data;
+    } catch (err) {
+        console.log(err)
+    }
+}
