@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Services\ReservationStatusService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,6 @@ class ReservationController extends Controller
             'date' => $request->input('date'),
             'time' => $request->input('time'),
         ];
-
 
         $reservation = Reservation::create($reservationData);
 
@@ -64,5 +64,13 @@ class ReservationController extends Controller
         }
 
     }
+
+    public function reservationCheck(int $restaurantId, ReservationStatusService $reservationStatusService): \Illuminate\Http\JsonResponse
+    {
+        $response = $reservationStatusService->reservationCheck($restaurantId);
+        \Laravel\Prompts\info($response);
+        return $response;
+    }
+
 
 }

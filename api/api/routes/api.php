@@ -13,6 +13,7 @@ Route::middleware(['cors'])->group(function () {
     Route::get('/reservations/{id}', [\App\Http\Controllers\ReservationController::class, 'findOne']);
     Route::put('/reservations/{id}', [\App\Http\Controllers\ReservationController::class, 'update']);
     Route::delete('/reservations/{id}', [\App\Http\Controllers\ReservationController::class, 'delete']);
+    Route::get('/reservations/{id}', [\App\Http\Controllers\ReservationController::class, 'reservationCheck']);
 
     Route::post('/restaurants', [\App\Http\Controllers\RestaurantController::class, 'store']);
     Route::get('/restaurants', [\App\Http\Controllers\RestaurantController::class, 'index']);
