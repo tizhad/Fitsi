@@ -24,7 +24,6 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::find($id);
 
         if ($restaurant) {
-
             return $restaurant;
         } else {
             return response()->json(['message' => 'Restaurant not found'], 404);

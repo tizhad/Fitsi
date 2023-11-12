@@ -3,6 +3,7 @@ import {getAllRestaurants, submitFormData} from "../../Services/apiService";
 import {Restaurant} from "../../Models/Restaurant";
 import moment from 'moment';
 import {Reservation} from "../../Models/Reservation";
+import {getReservationStatus} from "../../Services/reservationService";
 
 interface ModalProps {
     onClose: () => void;
@@ -45,6 +46,12 @@ function Modal({onClose, onReservation}: ModalProps) {
     }
 
     const handleChange = (e: any) => {
+        if (e.target['name'] === 'restaurant') {
+            const restaurantId = e.target.value;
+            getReservationStatus(restaurantId).then(v => {
+                // console.log(value)
+            })
+        }
         const {name, value} = e.target;
 
         setFormData((prevData) => ({
